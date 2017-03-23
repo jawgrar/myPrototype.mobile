@@ -1,0 +1,17 @@
+
+# NPM
+node_modules/
+
+# Ionic Build files
+# PS: There is .gitkeep file, don't know what is the reason for that.
+# www it's a folder for "ionic build" result, and shouldn't be stored inside repository.
+www/
+
+# PS: basically i think that ALL /platform folder should be ignored.
+# It's more simple to run ionic platfrom add android/ios then trying to keep all this building files.
+# Moreover linux and window version uses different building tools (not sure about mac).
+platforms/
+
+
+# WebStorm project files
+/.idea
