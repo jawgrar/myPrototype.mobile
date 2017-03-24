@@ -3,7 +3,7 @@ import { select } from '@angular-redux/store'
 import { Observable } from 'rxjs/Observable';
 import { IRouteData } from '../store/router.reducer';
 import { NavController } from 'ionic-angular';
-import { PagesToken } from '../common/tokens';
+import { ReduxRoutesToken } from '../common/tokens';
 
 /**
  *	Service that switch Ionic2 pages based on redux store state.
@@ -56,7 +56,7 @@ export class RouterService {
 	 */
 	private _nav: NavController;
 
-	constructor( @Inject(forwardRef(() => PagesToken)) pages: ReduxRoute[]) {
+	constructor( @Inject(forwardRef(() => ReduxRoutesToken)) pages: ReduxRoute[]) {
 		// Get and save list of available routes from DI (by the help of opaque token).
 		this._pages = pages;
 
