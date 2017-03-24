@@ -4,25 +4,37 @@ import { tassign } from 'tassign';
 import { NavController } from "ionic-angular";
 
 export interface IRouteData {
-	page: string,
-	routeData: any,
-	nav?: NavController
+    page: string,
+    routeData: any,
+    root: boolean,
+    nav?: NavController
 }
 
 const INITIAL_STATE: IRouteData = {
-	page: "default",
-	routeData: {},
+    page: "default",
+    routeData: {},
+    root: false
 };
 
 export function routerReducer(state: IRouteData = INITIAL_STATE, action: IPayloadAction) {
-	switch (action.type) {
-		case RouterActions.ROUTER_NAVIGATE:
-			return tassign(state, {
-				page: action.payload.page,
-				routeData: action.payload.routeData,
-				nav: action.payload.nav
-			} as IRouteData);
-		default:
-			return state;
-	}
+    switch (action.type) {
+        case RouterActions.ROUTER_NAVIGATE:
+            return tassign(state, {
+                page: action.payload.page,
+                routeData: action.payload.routeData,
+                nav: action.payload.nav,
+                root: false
+            } as IRouteData);
+
+        case RouterActions.ROUTER_NAVIGATE_ROOT:
+            return tassign(state, {
+                page: action.payload.page,
+                routeData: action.payload.routeData,
+                root: true,
+                nav: action.payload.nav
+            } as IRouteData);
+
+        default:
+            return state;
+    }
 }

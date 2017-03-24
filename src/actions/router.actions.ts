@@ -7,10 +7,11 @@ export class RouterActions {
 
 	constructor(private ngRedux: NgRedux<IAppState>) { }
 
-	static ROUTER_NAVIGATE: string = "ROUTER_NAVIGATE";
+    static ROUTER_NAVIGATE: string = "ROUTER_NAVIGATE";
+    static ROUTER_NAVIGATE_ROOT: string = "ROUTER_NAVIGATE_ROOT";
 
     /**
-     * Action that dispath event to navigate to specified page.
+     * Action that dispatch event to navigate to specified page.
      * @param page
      * @param routeData
      */
@@ -23,5 +24,22 @@ export class RouterActions {
 			}
 		});
 	}
+
+    /**
+     * Action that dispatch event to navigate to specified page as ROOT page
+     * (hide back button and forget all previous stack)
+     * @param page
+     * @param routeData
+     */
+    public navigateRoot(page: string, routeData?: any)
+    {
+        this.ngRedux.dispatch({
+            type: RouterActions.ROUTER_NAVIGATE_ROOT,
+            payload: {
+                page: page,
+                routeData: routeData
+            }
+        })
+    }
 
 }
