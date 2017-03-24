@@ -9,17 +9,17 @@ import { ReduxRoutesToken } from '../common/tokens';
  *    Service that switch Ionic2 pages based on redux store state.
  *
  * @export
- * @class RouterService
+ * @class ReduxRouterService
  */
 @Injectable()
-export class RouterService {
+export class ReduxRouterService {
 
 
     /**
      * Get the state of current page.
      *
      * @type {Observable<IRouteData>}
-     * @memberOf RouterService
+     * @memberOf ReduxRouterService
      */
     @select(state => state.router) router$: Observable<IRouteData>;
 
@@ -28,7 +28,7 @@ export class RouterService {
      *
      * @private
      * @type {string}
-     * @memberOf RouterService
+     * @memberOf ReduxRouterService
      */
     private _currentPage: string = 'default';
 
@@ -38,7 +38,7 @@ export class RouterService {
      *
      * @private
      * @type {ReduxRoute[]}
-     * @memberOf RouterService
+     * @memberOf ReduxRouterService
      */
     private _pages: ReduxRoute[] = [];
 
@@ -52,7 +52,7 @@ export class RouterService {
      *
      * @private
      * @type {NavController}
-     * @memberOf RouterService
+     * @memberOf ReduxRouterService
      */
     private _nav: NavController;
 
@@ -70,7 +70,7 @@ export class RouterService {
      * @private
      * @param {*} data
      *
-     * @memberOf RouterService
+     * @memberOf ReduxRouterService
      */
     private onPageChanged(data: IRouteData) {
         let found: boolean = false;
@@ -111,7 +111,7 @@ export class RouterService {
      *
      * @param {NavController} nav
      *
-     * @memberOf RouterService
+     * @memberOf ReduxRouterService
      */
     public setNav(nav: NavController) {
         this._nav = nav;

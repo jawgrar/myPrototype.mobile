@@ -30,7 +30,7 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { IAppState } from '../store/index';
 import { rootReducer } from '../store/index';
 import * as createLogger from 'redux-logger';
-import { RouterService } from "../services/router.service";
+import { ReduxRouterService } from "../services/router.service";
 import { RouterActions } from "../actions/router.actions";
 import { ReduxRoutesToken } from "../common/tokens";
 import { reduxRoutes } from "../common/pages";
@@ -103,7 +103,7 @@ export function providers() {
         // Redux & Redux-Router
         { provide: ReduxRoutesToken, useValue: reduxRoutes },
         RouterActions,
-        RouterService
+        ReduxRouterService
     ];
 }
 
@@ -123,4 +123,8 @@ export function providers() {
     entryComponents: entryComponents(),
     providers: providers()
 })
-export class AppModule {}
+export class AppModule {
+    constructor(ngRedux: NgRedux<IAppState>) {
+        ngRedux.configureStore(rootReducer, {}, [createLogger()]);
+    }
+}
