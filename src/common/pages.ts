@@ -1,8 +1,6 @@
 import { ReduxRoute } from "../services/router.service";
-import { HomePage } from "../pages/home/home";
 
 // pages
-import { FirstRunPage } from '../pages/pages';
 import { CardsPage } from '../pages/cards/cards';
 import { ContentPage } from '../pages/content/content';
 import { LoginPage } from '../pages/login/login';
@@ -18,7 +16,7 @@ import { SearchPage } from '../pages/search/search';
 
 
 export const reduxRoutes: ReduxRoute[] = [
-	{ name: "default", class: HomePage },
+	{ name: "default", class: TutorialPage },
 	{ name: 'tutorial', class: TutorialPage },
 	{ name: 'welcome', class: WelcomePage },
 	{ name: 'tabs', class: TabsPage },

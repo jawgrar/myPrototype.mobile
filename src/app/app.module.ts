@@ -25,8 +25,8 @@ import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
 import { Items } from '../mocks/providers/items';
 
-import { HomePage } from '../pages/home/home';
-import { NgRedux, NgReduxModule } from '@angular-redux/store';
+// ============ Redux && Redux router ===============
+import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { IAppState } from '../store/index';
 import { rootReducer } from '../store/index';
 import * as createLogger from 'redux-logger';
@@ -36,6 +36,12 @@ import { ReduxRoutesToken } from "../common/tokens";
 import { reduxRoutes } from "../common/pages";
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+
+// ====================================================================
+// ====================== DEBUG MODE CONSTANT! ========================
+// ====================================================================
+const __DEBUG: boolean = true;
+// TODO: this probably should be resolved by build environment: prov / dev.
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -124,7 +130,18 @@ export function providers() {
     providers: providers()
 })
 export class AppModule {
-    constructor(ngRedux: NgRedux<IAppState>) {
-        ngRedux.configureStore(rootReducer, {}, [createLogger()]);
+    constructor(ngRedux: NgRedux<IAppState>,  devTools: DevToolsExtension) {
+
+        // More about what enhancers is: https://github.com/reactjs/redux/blob/master/docs/Glossary.md#store-enhancer
+        // PS: They probably never used by devs, because there is middelware enhancer that allow devs to write
+        // "high level enhancers", which is simpler way to make some additions to store logic.
+        let enhancers = [];
+
+        // You probably only want to expose this tool in devMode.
+        if (__DEBUG && devTools.isEnabled()) {
+            enhancers = [ ...enhancers, devTools.enhancer() ];
+        }
+
+        ngRedux.configureStore(rootReducer, {}, [createLogger()], enhancers);
     }
 }
