@@ -1,6 +1,6 @@
 import { OpaqueToken } from "@angular/core";
 
 /**
- * Токен страниц для redux-роутера.
+ * Redux router available pages.
  */
-export const PagesToken = new OpaqueToken("Pages");
+export const ReduxRoutesToken = new OpaqueToken("Pages");
