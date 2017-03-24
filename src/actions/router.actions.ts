@@ -5,7 +5,8 @@ import { IAppState } from '../store';
 @Injectable()
 export class RouterActions {
 
-	constructor(private ngRedux: NgRedux<IAppState>) { }
+    constructor(private ngRedux: NgRedux<IAppState>) {
+    }
 
     static ROUTER_NAVIGATE: string = "ROUTER_NAVIGATE";
     static ROUTER_NAVIGATE_ROOT: string = "ROUTER_NAVIGATE_ROOT";
@@ -15,15 +16,16 @@ export class RouterActions {
      * @param page
      * @param routeData
      */
-	public navigate(page: string, routeData?: any) {
-		this.ngRedux.dispatch({
-			type: RouterActions.ROUTER_NAVIGATE,
-			payload: {
-				page: page,
-				routeData: routeData
-			}
-		});
-	}
+    public navigate(page: string, routeData?: any, options?: any) {
+        this.ngRedux.dispatch({
+            type: RouterActions.ROUTER_NAVIGATE,
+            payload: {
+                page: page,
+                routeData: routeData,
+                options: options
+            }
+        });
+    }
 
     /**
      * Action that dispatch event to navigate to specified page as ROOT page
@@ -31,13 +33,13 @@ export class RouterActions {
      * @param page
      * @param routeData
      */
-    public navigateRoot(page: string, routeData?: any)
-    {
+    public navigateRoot(page: string, routeData?: any, options?: any) {
         this.ngRedux.dispatch({
             type: RouterActions.ROUTER_NAVIGATE_ROOT,
             payload: {
                 page: page,
-                routeData: routeData
+                routeData: routeData,
+                options: options
             }
         })
     }

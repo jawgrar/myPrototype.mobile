@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
-import { LoginPage } from '../login/login';
-import { SignupPage } from '../signup/signup';
+import { RouterActions } from "../../actions/router.actions";
 
 /**
  * The Welcome Page is a splash page that quickly describes the app,
@@ -16,13 +14,14 @@ import { SignupPage } from '../signup/signup';
 })
 export class WelcomePage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController,
+              private _reduxRouterActions: RouterActions) {}
 
   login() {
-    this.navCtrl.push(LoginPage);
+      this._reduxRouterActions.navigate("login");
   }
 
   signup() {
-    this.navCtrl.push(SignupPage);
+      this._reduxRouterActions.navigate("signup");
   }
 }
