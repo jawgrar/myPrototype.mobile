@@ -4,6 +4,7 @@ import { ListMasterPage } from './list-master/list-master';
 import { SearchPage } from './search/search';
 import { SettingsPage } from './settings/settings';
 
+// TODO: change this constants!
 // The page the user lands on after opening the app and without a session
 export const FirstRunPage = TutorialPage;
 

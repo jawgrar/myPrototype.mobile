@@ -8,6 +8,7 @@ export interface IRouteData {
     routeData: any,
     root: boolean,
     nav?: NavController
+    options?: any
 }
 
 const INITIAL_STATE: IRouteData = {
@@ -23,6 +24,7 @@ export function routerReducer(state: IRouteData = INITIAL_STATE, action: IPayloa
                 page: action.payload.page,
                 routeData: action.payload.routeData,
                 nav: action.payload.nav,
+                options: action.payload.options,
                 root: false
             } as IRouteData);
 
@@ -31,6 +33,7 @@ export function routerReducer(state: IRouteData = INITIAL_STATE, action: IPayloa
                 page: action.payload.page,
                 routeData: action.payload.routeData,
                 root: true,
+                options: action.payload.options,
                 nav: action.payload.nav
             } as IRouteData);
 

@@ -87,11 +87,11 @@ export class ReduxRouterService {
                 // Navigate to target page (in root or default mode)
 				if (data.root)
                 {
-                    this._nav.setRoot(element.class, {data: data.routeData});
+                    this._nav.setRoot(element.class, {data: data.routeData}, data.options);
                 }
                 else
                 {
-                    this._nav.push(element.class, {data: data.routeData});
+                    this._nav.push(element.class, {data: data.routeData}, data.options);
                 }
 
                 this._currentPage = element.name;
