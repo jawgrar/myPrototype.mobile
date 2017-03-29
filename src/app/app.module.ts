@@ -36,6 +36,7 @@ import { ReduxRoutesToken } from "../common/tokens";
 import { reduxRoutes } from "../common/pages";
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+import { UserActions } from "../actions/user.actions";
 
 // ====================================================================
 // ====================== DEBUG MODE CONSTANT! ========================
@@ -108,8 +109,11 @@ export function providers() {
 
         // Redux & Redux-Router
         { provide: ReduxRoutesToken, useValue: reduxRoutes },
+        ReduxRouterService,
+
+        // Redux Actions
         RouterActions,
-        ReduxRouterService
+        UserActions
     ];
 }
 
