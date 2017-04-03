@@ -13,11 +13,15 @@ export class UserActions {
     }
 
     // TODO: Move this to OpaqueToken!
-    static API_URL: string = "http://localhost:52712/";
+    static API_URL: string = "http://localhost:5000/";
 
     static USER_LOGIN_START: string = "USER_LOGIN_START";
     static USER_LOGIN_SUCCESS: string = "USER_LOGIN_SUCCESS";
     static USER_LOGIN_ERROR: string = "USER_LOGIN_ERROR";
+
+    static USER_REGISTER_START: string = "USER_REGISTER_START";
+    static USER_REGISTER_SUCCESS: string = "USER_REGISTER_SUCCESS";
+    static USER_REGISTER_ERROR: string = "USER_REGISTER_ERROR";
 
     /**
      * Method that takes login and password and tries to auth.
@@ -54,23 +58,49 @@ export class UserActions {
                     this._ngRedux.dispatch({
                         type: UserActions.USER_LOGIN_SUCCESS
                     });
-
-                    // test call api
-                    this._auth.get(UserActions.API_URL + "api/me")
-                        .subscribe(
-                            result => {
-                                debugger;
-                            },
-                            error => {
-                                debugger;
-                            }
-                        );
                 },
                 error => {
                     // Dispatch error event.
                     // TODO: add error details!
                     this._ngRedux.dispatch({
                         type: UserActions.USER_LOGIN_ERROR
+                    });
+                }
+            );
+    }
+
+    public register(email: string,  password: string): void {
+        // First of all dispatch register started event.
+        // This allows us to show some loader or etc.
+        this._ngRedux.dispatch({
+            type: UserActions.USER_REGISTER_START
+        });
+
+        // Now create request form
+        let body = new URLSearchParams();
+        body.set("Email", email);
+        body.set("Password", password);
+        body.set("ConfirmPassword", password);
+
+        // Now make request to backend.
+        // Now real login process.
+        this._http.post(UserActions.API_URL + "api/user/CreateAccount", body)
+            .subscribe(
+                result => {
+                    debugger;
+                    // If everything okay then run login procedure.
+                    this._ngRedux.dispatch({
+                        type: UserActions.USER_REGISTER_SUCCESS
+                    });
+
+                    // Now log-in user.
+                    this.login(email, password);
+                },
+                error => {
+                    // Dispatch error event.
+                    // TODO: add error details!
+                    this._ngRedux.dispatch({
+                        type: UserActions.USER_REGISTER_ERROR
                     });
                 }
             );

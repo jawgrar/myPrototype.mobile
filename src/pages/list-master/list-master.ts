@@ -6,6 +6,8 @@ import { ItemCreatePage } from '../item-create/item-create';
 
 import { Items } from '../../providers/providers';
 import { Item } from '../../models/item';
+import { UserActions } from "../../actions/user.actions";
+import { AuthHttp } from "angular2-jwt";
 
 @Component({
   selector: 'page-list-master',
@@ -14,7 +16,10 @@ import { Item } from '../../models/item';
 export class ListMasterPage {
   currentItems: Item[];
 
-  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController,
+              public items: Items,
+              public modalCtrl: ModalController,
+              private _auth: AuthHttp) {
     this.currentItems = this.items.query();
   }
 
@@ -22,6 +27,16 @@ export class ListMasterPage {
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+    // test call api
+    this._auth.get(UserActions.API_URL + "api/me")
+        .subscribe(
+            result => {
+              console.log(result.text());
+            },
+            error => {
+                console.log("AUTH REQUEST ERROR! Can't load private controller method!");
+            }
+        );
   }
 
   /**
@@ -34,7 +49,7 @@ export class ListMasterPage {
       if (item) {
         this.items.add(item);
       }
-    })
+    });
     addModal.present();
   }
 

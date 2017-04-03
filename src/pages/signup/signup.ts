@@ -6,6 +6,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { MainPage } from '../../pages/pages';
 import { User } from '../../providers/user';
 import { RouterActions } from "../../actions/router.actions";
+import { UserActions } from "../../actions/user.actions";
 
 /*
  Generated class for the Signup page.
@@ -34,7 +35,8 @@ export class SignupPage {
                 public user: User,
                 public toastCtrl: ToastController,
                 public translateService: TranslateService,
-                private _reduxRouterActions: RouterActions) {
+                private _reduxRouterActions: RouterActions,
+                private  _userActions: UserActions) {
 
         this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
             this.signupErrorString = value;

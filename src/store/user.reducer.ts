@@ -21,7 +21,12 @@ export function userReducer(state: IUserData = INITIAL_STATE, action: IPayloadAc
 
         case UserActions.USER_LOGIN_SUCCESS:
             return tassign(state, {
-                state: "in_process"
+                state: "success"
+            });
+
+        case UserActions.USER_LOGIN_ERROR:
+            return tassign(state, {
+                state: "error"
             });
 
         default:
