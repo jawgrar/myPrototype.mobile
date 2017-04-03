@@ -29,6 +29,21 @@ export function userReducer(state: IUserData = INITIAL_STATE, action: IPayloadAc
                 state: "error"
             });
 
+        case UserActions.USER_REGISTER_START:
+            return tassign(state, {
+                state: "registering"
+            });
+
+        case UserActions.USER_REGISTER_ERROR:
+            return tassign(state, {
+                state: "register_error"
+            });
+
+        case UserActions.USER_REGISTER_ERROR:
+            return tassign(state, {
+                state: "register_success"
+            });
+
         default:
             return state;
     }

@@ -19,7 +19,8 @@ export class ListMasterPage {
   constructor(public navCtrl: NavController,
               public items: Items,
               public modalCtrl: ModalController,
-              private _auth: AuthHttp) {
+              private _auth: AuthHttp,
+              private _userActions: UserActions) {
     this.currentItems = this.items.query();
   }
 
@@ -37,6 +38,10 @@ export class ListMasterPage {
                 console.log("AUTH REQUEST ERROR! Can't load private controller method!");
             }
         );
+  }
+
+  doLogout() {
+    this._userActions.logout();
   }
 
   /**
