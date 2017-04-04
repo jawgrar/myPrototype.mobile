@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage, IonicStorageModule } from '@ionic/storage';
 
@@ -37,6 +37,7 @@ import { reduxRoutes } from "../common/pages";
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { UserActions } from "../actions/user.actions";
+import { AuthConfig, AuthHttp } from "angular2-jwt";
 
 // ====================================================================
 // ====================== DEBUG MODE CONSTANT! ========================
@@ -65,6 +66,15 @@ export function provideSettings(storage: Storage) {
     });
 }
 
+/**
+ * Basic factory of JWT AuthHTTP service
+ * @param http
+ * @param options
+ * @returns {AuthHttp}
+ */
+function authHttpServiceFactory(http: Http, options: RequestOptions) {
+    return new AuthHttp(new AuthConfig(), http, options);
+}
 
 /**
  * The Pages array lists all of the pages we want to use in our app.
@@ -113,7 +123,14 @@ export function providers() {
 
         // Redux Actions
         RouterActions,
-        UserActions
+        UserActions,
+
+        // Angular2 jwt
+        {
+            provide: AuthHttp,
+            useFactory: authHttpServiceFactory,
+            deps: [Http, RequestOptions]
+        }
     ];
 }
 

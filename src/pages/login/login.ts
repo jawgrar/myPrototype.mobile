@@ -44,7 +44,7 @@ export class LoginPage {
         // Subcribe to user state change event.
         this._onUserStateUpdated.subscribe(
             newState => {
-                if (newState === "authenticated")
+                if (newState === "success")
                 {
                     this.loginSuccess();
                 }

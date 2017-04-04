@@ -6,6 +6,9 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { MainPage } from '../../pages/pages';
 import { User } from '../../providers/user';
 import { RouterActions } from "../../actions/router.actions";
+import { UserActions } from "../../actions/user.actions";
+import { Observable } from "rxjs";
+import { select } from "@angular-redux/store";
 
 /*
  Generated class for the Signup page.
@@ -30,34 +33,50 @@ export class SignupPage {
     // Our translated text strings
     private signupErrorString: string;
 
+    @select(store => store.user.state)
+    private _onUserStateUpdated: Observable<string>;
+
     constructor(public navCtrl: NavController,
                 public user: User,
                 public toastCtrl: ToastController,
                 public translateService: TranslateService,
-                private _reduxRouterActions: RouterActions) {
+                private _reduxRouterActions: RouterActions,
+                private  _userActions: UserActions) {
 
         this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
             this.signupErrorString = value;
-        })
+        });
+
+        // Subcribe to user state change event.
+        this._onUserStateUpdated.subscribe(
+            newState => {
+                if (newState === "register_success")
+                {
+                    this.registerSuccess();
+                }
+                else if (newState === "register_error")
+                {
+                    // TODO: we can write error to another store field.
+                    this.registerError();
+                }
+            }
+        );
     }
 
     doSignup() {
-        // Attempt to login in through our User service
-        this.user.signup(this.account).subscribe((resp) => {
-            // TOOD: main page constant
-            this._reduxRouterActions.navigate("tabs");
-        }, (err) => {
+       this._userActions.register(this.account.email, this.account.password);
+    }
 
-            // TODO: Remove this when you add your signup endpoint
-            this._reduxRouterActions.navigate("tabs");
-
-            // Unable to sign up
-            let toast = this.toastCtrl.create({
-                message: this.signupErrorString,
-                duration: 3000,
-                position: 'top'
-            });
-            toast.present();
+    private registerError(): void {
+        let toast = this.toastCtrl.create({
+            message: this.signupErrorString,
+            duration: 3000,
+            position: 'top'
         });
+        toast.present();
+    }
+
+    private registerSuccess(): void {
+        this._reduxRouterActions.navigate("tabs");
     }
 }
