@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Api } from './api';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { tokenNotExpired } from "angular2-jwt";
 
 /**
  * Most apps have the concept of a User. This is a simple provider
@@ -85,5 +86,9 @@ export class User {
    */
   _loggedIn(resp) {
     this._user = resp.user;
+  }
+
+  public isAuthenticated(): boolean {
+    return  tokenNotExpired();
   }
 }
